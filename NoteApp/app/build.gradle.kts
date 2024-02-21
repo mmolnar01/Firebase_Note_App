@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "hu.klm60o.android.noteapp"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "hu.klm60o.android.noteapp"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
