@@ -1,6 +1,7 @@
 package hu.klm60o.android.noteapp
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PatternMatcher
@@ -27,6 +28,10 @@ class CreateAccountActivity : AppCompatActivity() {
         binding.createAccountButton.setOnClickListener {
             createAccount()
         }
+
+        binding.loginTextViewButton.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
     }
     public override fun onStart() {
         super.onStart()
@@ -44,7 +49,7 @@ class CreateAccountActivity : AppCompatActivity() {
 
         val accountValidated = validateData(email, password, confirmPassword)
 
-        if(!accountValidated) {
+        if (!accountValidated) {
             return
         }
 
@@ -53,16 +58,16 @@ class CreateAccountActivity : AppCompatActivity() {
 
     private fun validateData(email: String, password: String, confirmPassword: String): Boolean {
         //Validating the email address
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             binding.emailEditText.error = "Invalid Email"
             return false
         }
         //Validating the password
-        if(password.length < 5) {
+        if (password.length < 5) {
             binding.passwordEditText.error = "Password should be at least 5 cahracters"
             return false
         }
-        if(!password.equals(confirmPassword)) {
+        if (!password.equals(confirmPassword)) {
             binding.passwordConfirmEditText.error = "Passwords do not match"
             return false
         }
