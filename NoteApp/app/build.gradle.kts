@@ -8,6 +8,10 @@ android {
     namespace = "hu.klm60o.android.noteapp"
     compileSdk = 34
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "hu.klm60o.android.noteapp"
         minSdk = 26
