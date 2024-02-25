@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Note App</string>
     <string name="note_app">Note App</string>
+    <string name="e_mail">E-mail</string>
+    <string name="welcome">Welcome!</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="go_to_login">Go to login</string>
 </resources>
