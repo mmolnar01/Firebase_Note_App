@@ -53,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
         }
         //Validating the password
         if (password.length < 5) {
-            binding.passwordEditTextLogin.error = "Password should be at least 5 cahracters"
+            binding.passwordEditTextLogin.error = "Password should be at least 5 characters"
             return false
         }
 
