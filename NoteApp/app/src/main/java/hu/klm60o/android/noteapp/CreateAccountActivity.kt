@@ -76,9 +76,6 @@ class CreateAccountActivity : AppCompatActivity() {
     }
 
     private fun createAccountInFirebase(email: String, password: String) {
-        //binding.createAccountButton.isEnabled = false
-
-        //val fireBaseAuth = Firebase.auth
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
             if (task.isSuccessful) {
