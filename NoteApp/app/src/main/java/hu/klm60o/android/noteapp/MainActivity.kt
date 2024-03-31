@@ -16,5 +16,22 @@ class MainActivity : AppCompatActivity() {
         binding.addNoteButton.setOnClickListener {
             startActivity(Intent(this, NoteDetailsActivity::class.java))
         }
+
+        binding.menuButton.setOnClickListener {
+            showMenu()
+        }
+
+        fillRecyclerView()
+
+    }
+
+    //Shows the menu
+    private fun showMenu() {
+        return
+    }
+
+    //Fills the recycler view with the data from Firestore
+    private fun fillRecyclerView() {
+        return
     }
 }
