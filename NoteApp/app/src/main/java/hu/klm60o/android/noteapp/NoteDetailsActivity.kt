@@ -14,19 +14,21 @@ import hu.klm60o.android.noteapp.databinding.ActivityNoteDetailsBinding
 
 class NoteDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteDetailsBinding
-    private lateinit var docId: String
+    private var docId: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNoteDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        docId = intent.getStringExtra("docid").toString()
+        docId = intent.getStringExtra("docid")
 
 
         if (docId != null) {
             binding.addNoteTopBarText.setText("Edit Note")
             binding.addNoteTitle.setText(intent.getStringExtra("title"))
             binding.addNoteText.setText(intent.getStringExtra("text"))
+        } else {
+            binding.addNoteTopBarText.setText("Add New Note")
         }
 
         binding.addNoteSaveButton.setOnClickListener {
@@ -53,7 +55,7 @@ class NoteDetailsActivity : AppCompatActivity() {
         if (currentUser != null) {
             if (docId != null) {
                 documentReference = FirebaseFirestore.getInstance().collection("notes")
-                    .document(currentUser.uid).collection("my_notes").document(docId)
+                    .document(currentUser.uid).collection("my_notes").document(docId!!)
             } else {
                 documentReference = FirebaseFirestore.getInstance().collection("notes")
                     .document(currentUser.uid).collection("my_notes").document()

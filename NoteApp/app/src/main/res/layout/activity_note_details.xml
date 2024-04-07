@@ -20,7 +20,7 @@
             android:textSize="32sp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="Add New Note"/>
+            android:text="@string/add_new_note"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
