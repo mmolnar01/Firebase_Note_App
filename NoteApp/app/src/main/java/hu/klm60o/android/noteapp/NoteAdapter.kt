@@ -1,6 +1,7 @@
 package hu.klm60o.android.noteapp
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,15 @@ class NoteAdapter :
         holder.binding.noteContentTextView.setText(model.text)
         holder.binding.noteTimestampTextView.setText(SimpleDateFormat("yyyy/MM/dd hh:mm").format(model.timestamp?.toDate()
             ?: null))
+
+        holder.itemView.setOnClickListener {
+            var intent = Intent(context, NoteDetailsActivity::class.java)
+            intent.putExtra("title", model.title)
+            intent.putExtra("text", model.text)
+            var docId = this.snapshots.getSnapshot(position).id
+            intent.putExtra("docid", docId)
+            context.startActivity(intent)
+        }
     }
     inner class NoteViewHolder(val binding: RecyclerNoteItemBinding) : RecyclerView.ViewHolder(binding.root)
 }
