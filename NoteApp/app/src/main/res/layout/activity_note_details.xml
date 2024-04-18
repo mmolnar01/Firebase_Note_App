@@ -52,14 +52,25 @@
             android:layout_marginVertical="8dp"/>
 
         <EditText
+            android:id="@+id/addNoteText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/addNoteText"
+            android:layout_marginVertical="8dp"
+            android:gravity="top"
             android:hint="Text"
             android:minLines="20"
-            android:textSize="16sp"
-            android:gravity="top"
-            android:layout_marginVertical="8dp"/>
+            android:textSize="16sp" />
     </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/deleteNoteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+
 
 </RelativeLayout>

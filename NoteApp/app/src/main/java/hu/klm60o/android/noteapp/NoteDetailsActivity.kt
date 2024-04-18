@@ -4,6 +4,7 @@ import android.content.ContentValues
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Toast
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -27,12 +28,47 @@ class NoteDetailsActivity : AppCompatActivity() {
             binding.addNoteTopBarText.setText("Edit Note")
             binding.addNoteTitle.setText(intent.getStringExtra("title"))
             binding.addNoteText.setText(intent.getStringExtra("text"))
+            binding.deleteNoteButton.visibility = View.VISIBLE
         } else {
             binding.addNoteTopBarText.setText("Add New Note")
         }
 
         binding.addNoteSaveButton.setOnClickListener {
             saveNote()
+        }
+
+        binding.deleteNoteButton.setOnClickListener {
+            deleteNote()
+        }
+    }
+
+    private fun deleteNote() {
+        var currentUser = FirebaseAuth.getInstance().currentUser
+        var documentReference: DocumentReference
+        if (currentUser != null) {
+
+            documentReference = FirebaseFirestore.getInstance().collection("notes")
+                .document(currentUser.uid).collection("my_notes").document(docId!!)
+
+
+            documentReference.delete().addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Log.d(ContentValues.TAG, "deleteNote:success")
+                    Toast.makeText(
+                        this,
+                        "Note Deleted From Database Successfully.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                } else {
+                    Log.w(ContentValues.TAG, "deleteNote:failure", task.exception)
+                    Toast.makeText(
+                        baseContext,
+                        "Failed Deleting Note From Database",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                }
+            }
         }
     }
 

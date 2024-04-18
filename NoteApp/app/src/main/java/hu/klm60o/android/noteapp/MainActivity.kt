@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.menuButton.setOnClickListener {
-            showMenu()
+            logOut()
         }
 
         fillRecyclerView()
@@ -48,9 +48,11 @@ class MainActivity : AppCompatActivity() {
         noteAdapter.notifyDataSetChanged()
     }
 
-    //Shows the menu
-    private fun showMenu() {
-        return
+    //Logs out from the app
+    private fun logOut() {
+        FirebaseAuth.getInstance().signOut()
+        startActivity(Intent(this, LoginActivity::class.java))
+        finish()
     }
 
     //Fills the recycler view with the data from Firestore
