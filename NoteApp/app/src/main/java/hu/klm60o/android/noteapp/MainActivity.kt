@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.addNoteButton.setOnClickListener {
             noteDetails()
-            //startActivity(Intent(this, NoteDetailsActivity::class.java))
         }
 
         binding.menuButton.setOnClickListener {
