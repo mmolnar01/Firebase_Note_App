@@ -7,15 +7,20 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.Timestamp
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.analytics
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import hu.klm60o.android.noteapp.databinding.ActivityMainBinding
 import hu.klm60o.android.noteapp.databinding.ActivityNoteDetailsBinding
 
 class NoteDetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityNoteDetailsBinding
     private var docId: String? = null
+    private lateinit var firebaseAnalytics: FirebaseAnalytics
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNoteDetailsBinding.inflate(layoutInflater)
@@ -23,13 +28,17 @@ class NoteDetailsActivity : AppCompatActivity() {
 
         docId = intent.getStringExtra("docid")
 
+        firebaseAnalytics = Firebase.analytics
+
 
         if (docId != null) {
+            logEvent("ExistingNoteEdit")
             binding.addNoteTopBarText.setText("Edit Note")
             binding.addNoteTitle.setText(intent.getStringExtra("title"))
             binding.addNoteText.setText(intent.getStringExtra("text"))
             binding.deleteNoteButton.visibility = View.VISIBLE
         } else {
+            logEvent("NewNoteEdit")
             binding.addNoteTopBarText.setText("Add New Note")
         }
 
@@ -40,6 +49,14 @@ class NoteDetailsActivity : AppCompatActivity() {
         binding.deleteNoteButton.setOnClickListener {
             deleteNote()
         }
+
+    }
+
+    private fun logEvent(name: String) {
+        var params = Bundle()
+        params.putInt("ButtonID", binding.root.id)
+        var bName = name
+        firebaseAnalytics.logEvent(bName, params)
     }
 
     private fun deleteNote() {
@@ -59,6 +76,7 @@ class NoteDetailsActivity : AppCompatActivity() {
                         "Note Deleted From Database Successfully.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    logEvent("NoteDeletedSuccessfully")
                     finish()
                 } else {
                     Log.w(ContentValues.TAG, "deleteNote:failure", task.exception)
@@ -67,6 +85,7 @@ class NoteDetailsActivity : AppCompatActivity() {
                         "Failed Deleting Note From Database",
                         Toast.LENGTH_SHORT,
                     ).show()
+                    logEvent("NoteDeletedFailure")
                 }
             }
         }
@@ -106,6 +125,7 @@ class NoteDetailsActivity : AppCompatActivity() {
                         "Note Added To Database Successfully.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    logEvent("NoteAddedToFirestoreSuccessfully")
                     finish()
                 } else {
                     Log.w(ContentValues.TAG, "addNoteToFirestore:failure", task.exception)
@@ -114,30 +134,9 @@ class NoteDetailsActivity : AppCompatActivity() {
                         "Failed Adding Note To Database",
                         Toast.LENGTH_SHORT,
                     ).show()
+                    logEvent("NoteAddedToFirestoreFailure")
                 }
             }
-
-            /*var documentReferencee = FirebaseFirestore.getInstance().collection("notes")
-                .document(currentUser.uid).collection("my_notes").add(note).addOnCompleteListener(this) {
-                    task ->
-                    if (task.isSuccessful) {
-                        Log.d(ContentValues.TAG, "addNoteToFirestore:success")
-                        Toast.makeText(
-                            this,
-                            "Note Added To Database Successfully.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        finish()
-                    } else {
-                        Log.w(ContentValues.TAG, "addNoteToFirestore:failure", task.exception)
-                        Toast.makeText(
-                            baseContext,
-                            "Failed Adding Note To Database",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    }
-                }*/
         }
-
     }
 }
