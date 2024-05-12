@@ -1,11 +1,15 @@
 package hu.klm60o.android.noteapp
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.analytics
 import com.google.firebase.analytics.ktx.analytics
@@ -13,6 +17,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 import hu.klm60o.android.noteapp.databinding.ActivityLoginBinding
 import hu.klm60o.android.noteapp.databinding.ActivityMainBinding
 import kotlin.concurrent.thread
@@ -39,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         fillRecyclerView()
-
     }
 
     private fun noteDetails() {
